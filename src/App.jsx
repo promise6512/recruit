@@ -1,5 +1,4 @@
 import { Button,WhiteSpace } from 'antd-mobile';
-
 export default function App() {
   return (
     <div>
