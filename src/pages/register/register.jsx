@@ -2,24 +2,47 @@
   注册路由组件
 */
 import {useState} from "react"
-import { withRouter } from "react-router";
-import { NavBar, WingBlank, WhiteSpace, List, InputItem,Radio,Button } from "antd-mobile"
+import { Redirect } from "react-router-dom";
+
+import { NavBar, WingBlank, WhiteSpace, List, InputItem,Radio,Button,Toast } from "antd-mobile"
 import Logo from "../../componets/logo/logo";
 import { useSelector,useDispatch } from 'react-redux';
-import {reqRegister} from '../../store/features/userSlice'
+import {reqRegister,clearErrmsg} from '../../store/features/userSlice';
+//import { reqRegister1 } from "../../api";
 //import {reqRegister} from "../../api/index"
-function Register(props) {
+export default  function Register(props) {
   const [username,setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPswd, setConfirmPswd] = useState('');
   const [type, setType] = useState('dashen')
   const dispatch = useDispatch();
+  const {redirect,errmsg} = useSelector(state => state.user)
   const register = () => {
-    dispatch(reqRegister("zy1",'123','laoban'))  
+    if(!username){
+      Toast.fail("用户名不能为空");
+    }else if(!password){
+      Toast.fail("密码不能为空");
+    }else if(password !== confirmPswd){
+      Toast.fail("两次输入的密码不一致");
+    }else{
+     // console.log(type)
+      dispatch(reqRegister({username,password,type}))
+    }
+    
   }
   const turnToLogin = () => {
     props.history.push("/login")
   }
+  
+  if(errmsg){
+    Toast.fail(errmsg);
+    dispatch(clearErrmsg())
+  }
+
+  if(redirect){
+    return <Redirect to={redirect}></Redirect>
+  }
+
   return (
     <div>
       <NavBar>ZJU&nbsp;直&nbsp;聘</NavBar>
@@ -49,4 +72,3 @@ function Register(props) {
     </div>
   )
 }
-export default withRouter(Register)
