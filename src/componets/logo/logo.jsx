@@ -1,5 +1,5 @@
 import logo from "./images/logo.png"
-import "./logo.less"
+import "./logo.css"
 export default function(){
   return(
     <div className="logo-container">
