@@ -9,7 +9,7 @@ import { reqUpdateUser } from "../../store/features/userSlice";
 import {useDispatch,useSelector} from "react-redux"
 export default function DashenInfo(){
   const [header, setHeader] = useState();
-  const [introduction, setIntroduction] = useState('');
+  const [info, setInfo] = useState('');
   const [post, setPost] = useState('');
   const dispatch = useDispatch()
   const {redirect} = useSelector(state => state.user)
@@ -19,7 +19,7 @@ export default function DashenInfo(){
   }
 
   const saveInfo = () => {
-    dispatch(reqUpdateUser({header,introduction,post}))
+    dispatch(reqUpdateUser({header,info,post}))
   }
   
   if(redirect === '/dashen'){
@@ -34,7 +34,7 @@ export default function DashenInfo(){
       <TextareaItem
         title="个人介绍:" 
         rows={3}
-        onChange={val => setIntroduction(val)}
+        onChange={val => setInfo(val)}
       />
       <Button type='primary' onClick={saveInfo}>保存&nbsp;&nbsp;</Button>
     </div>

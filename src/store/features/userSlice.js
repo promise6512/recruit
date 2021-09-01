@@ -26,23 +26,31 @@ export const reqAutoLogin = createAsyncThunk('user/reqAutoLogin',async()=>{
   return res.data
 })
 
+const initialState =  {
+  redirect: '',
+  errmsg:'',
+  data: {
+    _id:"",
+    username: "",
+    type: ""
+  }
+  
+}
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: {
-    redirect: '',
-    errmsg:'',
-    data: {
-      _id:"",
-      username: "",
-      type: ""
-    }
-    
-  },
+  initialState,
   reducers:{
     clearErrmsg:(state)=>{
       state.errmsg = ''
+    },
+    //使状态恢复初始化,用于登出
+    clearUser:(state)=>{
+      state.data = {};
+      state.redirect = '';
+      state.msg = "";
     }
+
   },
   extraReducers: {
     [reqRegister.fulfilled](state, { payload }) {
@@ -86,5 +94,5 @@ export const userSlice = createSlice({
     }
   }
 })
-export const {clearErrmsg} = userSlice.actions
+export const {clearErrmsg,clearUser} = userSlice.actions
 export default userSlice.reducer;

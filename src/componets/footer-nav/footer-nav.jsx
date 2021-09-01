@@ -1,6 +1,7 @@
 import { TabBar } from "antd-mobile";
 import { withRouter } from "react-router-dom";
 import {useSelector} from "react-redux";
+import "./footer-nav.css"
 function FooterNav(props) {
   const path = props.location.pathname;
   /* const navList = props.navList.filter(nav => path !== nav.path)
@@ -13,7 +14,7 @@ function FooterNav(props) {
     navList = [...props.navList.slice(1)]
   }
   return (
-    <div>
+    <div className="TabBar-container">
       <TabBar>
         {
           navList.map(nav => {
@@ -25,14 +26,14 @@ function FooterNav(props) {
                 icon={<div style={{
                   width: '22px',
                   height: '22px',
-                  background: `url("./footer-nar-images/${nav.icon}.png") center center /  21px 21px no-repeat`
+                  background: `url("./footer-bar-images/${nav.icon}.png") center center /  21px 21px no-repeat`
                 }}
                 />
                 }
                 selectedIcon={<div style={{
                   width: '22px',
                   height: '22px',
-                  background: `url("./footer-nar-images/${nav.icon}-selected.png") center center /  21px 21px no-repeat`
+                  background: `url("./footer-bar-images/${nav.icon}-selected.png") center center /  21px 21px no-repeat`
                 }}
                 />
                 }
