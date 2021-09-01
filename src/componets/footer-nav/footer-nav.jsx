@@ -1,13 +1,15 @@
 import { TabBar } from "antd-mobile";
-import { withRouter } from "react-router-dom"
+import { withRouter } from "react-router-dom";
+import {useSelector} from "react-redux";
 function FooterNav(props) {
   const path = props.location.pathname;
   /* const navList = props.navList.filter(nav => path !== nav.path)
   console.log(navList) */
   let navList
-  if(path === "/laoban"){
+  const user = useSelector((state)=>state.user)
+  if(user.data.type === "laoban"){
     navList = [props.navList[0],...props.navList.slice(2)]
-  }else if(path === "/dashen"){
+  }else if(user.data.type === "dashen"){
     navList = [...props.navList.slice(1)]
   }
   return (
@@ -34,6 +36,7 @@ function FooterNav(props) {
                 }}
                 />
                 }
+                onPress={()=>props.history.push(nav.path)}
               />
             )
           })
