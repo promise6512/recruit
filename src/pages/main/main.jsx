@@ -12,10 +12,10 @@ import NotFound from "../not-found/not-found";
 import Laoban from "../laoban/laoban";
 import Dashen from "../dashen/dashen";
 import Message from "../message/message";
-import Personal from "../personal/personnal";
+import Personal from "../personal/personal";
 import FooterNav from "../../componets/footer-nav/footer-nav";
 import { NavBar } from "antd-mobile";
-
+import "./navBar.css"
 
 // 给组件对象添加属性
 const navList = [ // 包含所有导航组件的相关信息数据
@@ -80,7 +80,7 @@ export default function Main(props) {
 
   return (
     <div>
-      {currentNav ? <NavBar>{currentNav.title}</NavBar> : null}
+      {currentNav ? <NavBar className="navBar">{currentNav.title}</NavBar> : null}
       <Switch>
         {
           navList.map(nav => <Route key={nav.path} path={nav.path} component={nav.component} ></Route>)
