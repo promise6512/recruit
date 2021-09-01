@@ -1,8 +1,8 @@
-
+import UserList from "../../componets/userList/userList";
 export default function laoban(){
   return (
     <div>
-      laoban
+      <UserList /* userList={userList} *//>
     </div>
   )
 }

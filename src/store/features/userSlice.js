@@ -15,37 +15,37 @@ export const reqLogin = createAsyncThunk('user/reqLogin', async (user) => {
 })
 
 //异步action reqUpdateUser
-export const reqUpdateUser = createAsyncThunk('user/reqUpdateUser',async(userInfo) => {
-  const res = await ajax('/update',userInfo,'POST');
+export const reqUpdateUser = createAsyncThunk('user/reqUpdateUser', async (userInfo) => {
+  const res = await ajax('/update', userInfo, 'POST');
   return res.data
 })
 
 //异步action 用于自动登录
-export const reqAutoLogin = createAsyncThunk('user/reqAutoLogin',async()=>{
+export const reqAutoLogin = createAsyncThunk('user/reqAutoLogin', async () => {
   const res = await ajax('/autoLogin');
   return res.data
 })
 
-const initialState =  {
+const initialState = {
   redirect: '',
-  errmsg:'',
+  errmsg: '',
   data: {
-    _id:"",
+    _id: "",
     username: "",
     type: ""
   }
-  
+
 }
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers:{
-    clearErrmsg:(state)=>{
+  reducers: {
+    clearErrmsg: (state) => {
       state.errmsg = ''
     },
     //使状态恢复初始化,用于登出
-    clearUser:(state)=>{
+    clearUser: (state) => {
       state.data = {};
       state.redirect = '';
       state.msg = "";
@@ -56,43 +56,43 @@ export const userSlice = createSlice({
     [reqRegister.fulfilled](state, { payload }) {
       //console.log(payload)
       if (payload.code === 0) {
-        const { username, type,header } = payload.data;
+        const { type, header } = payload.data;
         //state.data = { username, type }
         console.log(payload.data)
         state.data = payload.data
         //console.log(type);
         //console.log(getRedirect(type,header))
-        state.redirect = getRedirect(type,header)
-      }else{
+        state.redirect = getRedirect(type, header)
+      } else {
         state.errmsg = payload.msg
       }
     },
     [reqLogin.fulfilled](state, { payload }) {
       if (payload.code === 0) {
-        const {type,header } = payload.data;
-       // state.data = { username, type }
+        const { type, header } = payload.data;
+        // state.data = { username, type }
         state.data = payload.data
-        state.redirect = getRedirect(type,header)
-      }else{
+        state.redirect = getRedirect(type, header)
+      } else {
         state.errmsg = payload.msg
       }
     },
-    [reqUpdateUser.fulfilled](state,{payload}){
-      if(payload.code === 0){
+    [reqUpdateUser.fulfilled](state, { payload }) {
+      if (payload.code === 0) {
         state.data = payload.data;
-        const { type,header } = payload.data;
-        state.redirect = getRedirect(type,header)
+        const { type, header } = payload.data;
+        state.redirect = getRedirect(type, header)
       }
     },
-    [reqAutoLogin.fulfilled](state,{payload}){
-      if(payload.code === 0){
+    [reqAutoLogin.fulfilled](state, { payload }) {
+      if (payload.code === 0) {
         //console.log(payload.data)
         state.data = payload.data
-        const {type,header } = payload.data;
-        state.redirect = getRedirect(type,header)
+        const { type, header } = payload.data;
+        state.redirect = getRedirect(type, header)
       }
     }
   }
 })
-export const {clearErrmsg,clearUser} = userSlice.actions
+export const { clearErrmsg, clearUser } = userSlice.actions
 export default userSlice.reducer;

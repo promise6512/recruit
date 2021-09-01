@@ -5,10 +5,9 @@ import { Button, Result,List } from "antd-mobile"
 import Cookies from 'js-cookie';
 import { useSelector,useDispatch } from "react-redux";
 import { clearUser } from "../../store/features/userSlice";
-import { Redirect } from "react-router-dom";
 export default function Personal(props) {
   const dispatch = useDispatch()
-  const { username, type, header, company, post, salary,info } = useSelector(state => state.user).data;
+  const { username, type, /* header, */ company, post, salary,info } = useSelector(state => state.user).data;
   const logout = () => {
     Cookies.remove("userId");
     dispatch(clearUser());
@@ -17,7 +16,7 @@ export default function Personal(props) {
   return (
     <div>
       <Result
-        img={<img src="./header-images/头像1.png" />}
+        img={<img src="./header-images/头像1.png" alt="头像" />}
         title={username}
         message={company ? company : ''}
       />
