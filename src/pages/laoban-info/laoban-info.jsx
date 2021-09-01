@@ -26,7 +26,6 @@ export default function LaobanInfo(){
 
   if(redirect === "/laoban"){
     return <Redirect to={redirect}></Redirect>
-    dispatch()
   }
 
   return(

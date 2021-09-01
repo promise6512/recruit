@@ -19,12 +19,21 @@ export const reqUpdateUser = createAsyncThunk('user/reqUpdateUser',async(userInf
   const res = await ajax('/update',userInfo,'POST');
   return res.data
 })
+
+//异步action 用于自动登录
+export const reqAutoLogin = createAsyncThunk('user/reqAutoLogin',async()=>{
+  const res = await ajax('/autoLogin');
+  return res.data
+})
+
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
     redirect: '',
     errmsg:'',
     data: {
+      _id:"",
       username: "",
       type: ""
     }
@@ -40,7 +49,9 @@ export const userSlice = createSlice({
       //console.log(payload)
       if (payload.code === 0) {
         const { username, type,header } = payload.data;
-        state.data = { username, type }
+        //state.data = { username, type }
+        console.log(payload.data)
+        state.data = payload.data
         //console.log(type);
         //console.log(getRedirect(type,header))
         state.redirect = getRedirect(type,header)
@@ -48,13 +59,11 @@ export const userSlice = createSlice({
         state.errmsg = payload.msg
       }
     },
-    [reqRegister.rejected](state, err) {
-      console.log(err)
-    },
     [reqLogin.fulfilled](state, { payload }) {
       if (payload.code === 0) {
-        const { username, type,header } = payload.data;
-        state.data = { username, type }
+        const {type,header } = payload.data;
+       // state.data = { username, type }
+        state.data = payload.data
         state.redirect = getRedirect(type,header)
       }else{
         state.errmsg = payload.msg
@@ -64,6 +73,14 @@ export const userSlice = createSlice({
       if(payload.code === 0){
         state.data = payload.data;
         const { type,header } = payload.data;
+        state.redirect = getRedirect(type,header)
+      }
+    },
+    [reqAutoLogin.fulfilled](state,{payload}){
+      if(payload.code === 0){
+        //console.log(payload.data)
+        state.data = payload.data
+        const {type,header } = payload.data;
         state.redirect = getRedirect(type,header)
       }
     }

@@ -22,6 +22,9 @@ function Login(props) {
       dispatch(reqLogin({username,password}))
     }
   }
+  if(redirect){
+    return <Redirect to={redirect}></Redirect>
+  }
   const turnToRegister = () => {
     props.history.push("/register")
   }
@@ -31,9 +34,7 @@ function Login(props) {
     dispatch(clearErrmsg())
   }
 
-  if(redirect){
-    return <Redirect to={redirect}></Redirect>
-  }
+  
 
   return (
     <div>
