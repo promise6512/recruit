@@ -1,0 +1,13 @@
+.input-bar{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.navBar{
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.list{
+  margin: 50px 0;
+}

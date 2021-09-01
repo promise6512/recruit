@@ -1,11 +1,11 @@
-// 引入客户端 io
-import io from 'socket.io-client'
-// 连接服务器 , 得到代表连接的 socket 对象
-const socket = io('ws://localhost:3000')
-// 绑定 'receiveMessage' 的监听 , 来接收服务器发送的消息
-socket.on('receiveMsg', function (data) {
-  console.log(' 浏览器端接收到消息:', data)
+import io from "socket.io-client";
+//连接服务器,得到与服务器的连接对象
+const socket = io("ws://localhost:3000");
+//发送消息
+socket.emit('sendMsg', {name:'abc'},(data)=>{
+  console.log(data)
+});
+console.log("客户端向服务器发送消息",{name:"abc"})
+socket.on('receiveMsg',(data)=>{
+  console.log("客户端接收服务器发送的消息",data)
 })
-// 向服务器发送消息
-socket.emit('sendMsg', { name: 'Tom', date: Date.now() })
-console.log(' 浏览器端 向服务器发送 消息:', { name: 'Tom', date: Date.now() })

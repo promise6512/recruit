@@ -16,6 +16,7 @@ import Personal from "../personal/personal";
 import FooterNav from "../../componets/footer-nav/footer-nav";
 import { NavBar } from "antd-mobile";
 import "./navBar.css"
+import Chat from "../chat/chat";
 
 // 给组件对象添加属性
 const navList = [ // 包含所有导航组件的相关信息数据
@@ -87,6 +88,7 @@ export default function Main(props) {
         }
         <Route path='/dasheninfo' component={DashenInfo} />
         <Route path='/laobaninfo' component={LaobanInfo} />
+        <Route path={`/chat`} component={Chat}></Route>
         <Route component={NotFound}></Route>
       </Switch>
       {currentNav ? <FooterNav navList={navList}></FooterNav> : null}

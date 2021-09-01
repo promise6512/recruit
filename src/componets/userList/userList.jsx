@@ -1,12 +1,12 @@
 import { useEffect,useState } from "react";
 import {useSelector} from "react-redux"
+import {withRouter} from "react-router-dom"
 import { reqGetUserList } from "../../api";
 import { Card,WingBlank } from "antd-mobile";
 import "./userList.css"
-export default function UserList(props) {
+function UserList(props) {
   const [userList, setUserList] = useState([]);
   const {type} = useSelector(state => state.user).data;
-  
 
   useEffect(()=>{
     const getUserList = async () => {
@@ -24,7 +24,7 @@ export default function UserList(props) {
       {
         userList.map(user => {
           return (
-            <Card full key={user._id}>
+            <Card full key={user._id} onClick={()=>props.history.push(`/chat/${user._id}`)}>
               <Card.Header
                 thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
                 extra={<span>{user.username}</span>}
@@ -42,3 +42,4 @@ export default function UserList(props) {
     </WingBlank>
   )
 }
+export default withRouter(UserList)
