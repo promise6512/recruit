@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from 'js-cookie';
 import { reqAutoLogin } from "../../store/features/userSlice";
+import { reqGetMsgList } from "../../store/features/chatSlice";
 import LaobanInfo from "../laoban-info/laoban-info";
 import DashenInfo from "../dashen-info/dashen-info";
 import NotFound from "../not-found/not-found";
@@ -52,9 +53,9 @@ const navList = [ // 包含所有导航组件的相关信息数据
 
 export default function Main(props) {
   useEffect(() => {
-    //console.log(2)
-    dispatch(reqAutoLogin())
-    //console.log(1)
+    //console.log(1123123)
+    dispatch(reqAutoLogin());
+    dispatch(reqGetMsgList())
   }, [])
   //data为 user对象
   const { redirect, data } = useSelector(state => state.user);
@@ -88,7 +89,7 @@ export default function Main(props) {
         }
         <Route path='/dasheninfo' component={DashenInfo} />
         <Route path='/laobaninfo' component={LaobanInfo} />
-        <Route path={`/chat`} component={Chat}></Route>
+        <Route path='/chat/:userId' component={Chat}></Route>
         <Route component={NotFound}></Route>
       </Switch>
       {currentNav ? <FooterNav navList={navList}></FooterNav> : null}

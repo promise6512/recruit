@@ -6,7 +6,7 @@ import Register from "./pages/register/register"
 import Login from "./pages/login/login"
 import { Provider } from 'react-redux';
 import store from './store'
-import './test/socketIO'
+//import './test/socketIO'
 ReactDOM.render(
   <Provider store={store}>
   <HashRouter>
