@@ -1,5 +1,5 @@
 import { NavBar, List, InputItem, Icon, Grid } from "antd-mobile"
-import header from "../../assets/header-images/头像1.png"
+//import header from "../../assets/header-images/头像1.png"
 import { useState,useEffect } from "react";
 import { useSelector } from "react-redux"
 import { useHistory, useParams } from "react-router-dom";
@@ -32,6 +32,7 @@ export default function Chat() {
   //计算当前聊天的chat_id
   const myId = _id;  //我的id
   const targetId = params.userId; //对方id
+  
   const chat_id = [myId, targetId].sort().join('_');
 
   //对chatMsgs进行过滤,获取当前用户与对方的聊天记录
@@ -39,6 +40,7 @@ export default function Chat() {
   //console.log(msgs)
 
   //获取聊天对象的用户名
+  //console.log(targetId,users,user)
   const { username } = users[targetId];
 
   const handleSend = () => {
@@ -47,7 +49,7 @@ export default function Chat() {
     //路径参数的中的userId为消息的接收方
     const to = params.userId;
     if (content) {
-      console.log(to, from, content)
+      //console.log(to, from, content)
       sendMsg({ from, to, content })
       setContent('')
     }
@@ -78,7 +80,7 @@ export default function Chat() {
           msgs.map((msg, index) => {
             //对方发的消息
             if (msg.from === targetId) {
-              return <List.Item thumb={header} key={msg._id}>{msg.content}</List.Item>
+              return <List.Item thumb={require("../../assets/header-images/头像1.png").default} key={msg._id}>{msg.content}</List.Item>
             } else {
               //我发发的消息
               return <List.Item extra="我" key={msg._id}>{msg.content}</List.Item>

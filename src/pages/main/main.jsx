@@ -53,6 +53,8 @@ const navList = [ // 包含所有导航组件的相关信息数据
 ]
 
 export default function Main(props) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     //console.log(1123123)
     dispatch(reqAutoLogin());
@@ -66,12 +68,12 @@ export default function Main(props) {
       dispatch(reqGetMsgList());
     })
 
-  }, [])
+  }, [dispatch])
 
   //data为 user对象
   const { redirect, data } = useSelector(state => state.user);
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   //读取cookie中的id
   const userId = Cookies.get('userId');
   //cookie中没有_id则跳转到登录页面

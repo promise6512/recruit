@@ -18,6 +18,7 @@ export default function Personal(props) {
     <div className="personal-container">
       <Result
         img={<img src="./header-images/头像1.png" alt="头像" />}
+        //imgUrl={require("../../assets/header-images/头像1.png").default}
         title={username}
         message={company ? company : ''}
       />

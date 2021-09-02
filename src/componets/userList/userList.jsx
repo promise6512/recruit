@@ -3,11 +3,12 @@ import {useSelector} from "react-redux"
 import {withRouter} from "react-router-dom"
 import { reqGetUserList } from "../../api";
 import { Card,WingBlank } from "antd-mobile";
+//import avator from "../../assets/header-images/头像1.png"
 import "./userList.css"
 function UserList(props) {
   const [userList, setUserList] = useState([]);
   const {type} = useSelector(state => state.user).data;
-
+  //console.log(require("../../assets/header-images/头像1.png"))
   useEffect(()=>{
     const getUserList = async () => {
       //type1 = type === "dashen" ? "laoban" : "dashen"
@@ -18,7 +19,7 @@ function UserList(props) {
       }
     }
     getUserList()
-  },[])
+  },[type])
   return (
     <WingBlank className="userList-container">
       {
@@ -26,7 +27,8 @@ function UserList(props) {
           return (
             <Card full key={user._id} onClick={()=>props.history.push(`/chat/${user._id}`)}>
               <Card.Header
-                thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
+               // thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
+                thumb={require("../../assets/header-images/头像1.png").default}
                 extra={<span>{user.username}</span>}
               />
               <Card.Body>

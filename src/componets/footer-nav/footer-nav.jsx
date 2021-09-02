@@ -7,22 +7,27 @@ function FooterNav(props) {
   /* const navList = props.navList.filter(nav => path !== nav.path)
   console.log(navList) */
   let navList
-  const user = useSelector((state)=>state.user)
-  if(user.data.type === "laoban"){
+  const user = useSelector((state)=>state.user).data;
+  const {unReadCount} = useSelector(state => state.chat);
+  if(user.type === "laoban"){
     navList = [props.navList[0],...props.navList.slice(2)]
-  }else if(user.data.type === "dashen"){
+  }else if(user.type === "dashen"){
     navList = [...props.navList.slice(1)]
   }
+  //console.log(navList)
+
   return (
     <div className="TabBar-container">
       <TabBar>
         {
           navList.map(nav => {
+           // console.log(nav.path,unRead)
             return (
               <TabBar.Item
                 key={nav.icon}
                 title={nav.text}
                 selected={path === nav.path}
+                badge={nav.path==="/message" ? unReadCount : ''}
                 icon={<div style={{
                   width: '22px',
                   height: '22px',
