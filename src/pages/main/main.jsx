@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from 'js-cookie';
 import { reqAutoLogin } from "../../store/features/userSlice";
-import { reqGetMsgList } from "../../store/features/chatSlice";
+import { reqGetMsgList} from "../../store/features/chatSlice";
 import LaobanInfo from "../laoban-info/laoban-info";
 import DashenInfo from "../dashen-info/dashen-info";
 import NotFound from "../not-found/not-found";
@@ -18,7 +18,8 @@ import FooterNav from "../../componets/footer-nav/footer-nav";
 import { NavBar } from "antd-mobile";
 import "./navBar.css"
 import Chat from "../chat/chat";
-
+import { initIO } from "../../store/features/chatSlice";
+import { receiveMsg } from "../../store/features/chatSlice";
 // 给组件对象添加属性
 const navList = [ // 包含所有导航组件的相关信息数据
   {
@@ -55,10 +56,21 @@ export default function Main(props) {
   useEffect(() => {
     //console.log(1123123)
     dispatch(reqAutoLogin());
-    dispatch(reqGetMsgList())
+    dispatch(reqGetMsgList());
+    const socket = initIO();
+    //console.log(socket)
+    
+    socket.on('receiveMsg',()=>{
+      //console.log(chatMsg)
+      //dispatch(receiveMsg(chatMsg))
+      dispatch(reqGetMsgList());
+    })
+
   }, [])
+
   //data为 user对象
   const { redirect, data } = useSelector(state => state.user);
+
   const dispatch = useDispatch();
   //读取cookie中的id
   const userId = Cookies.get('userId');
