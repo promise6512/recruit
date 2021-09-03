@@ -59,16 +59,25 @@ export default function Main(props) {
     //console.log(1123123)
     dispatch(reqAutoLogin());
     dispatch(reqGetMsgList());
-    const socket = initIO();
-    //console.log(socket)
     
-    socket.on('receiveMsg',()=>{
+    
+    /* socket.on('receiveMsg',(chatMsg)=>{
       //console.log(chatMsg)
-      //dispatch(receiveMsg(chatMsg))
-      dispatch(reqGetMsgList());
-    })
+      dispatch(receiveMsg(chatMsg))
+     // dispatch(reqGetMsgList());
+    }) */
 
   }, [dispatch])
+
+  useEffect(() => {
+    const socket = initIO();
+    //console.log(socket)
+    socket.on('receiveMsg',(chatMsg)=>{
+      //console.log(chatMsg)
+      dispatch(receiveMsg(chatMsg))
+     // dispatch(reqGetMsgList());
+    })
+  }, [])
 
   //data为 user对象
   const { redirect, data } = useSelector(state => state.user);
@@ -76,6 +85,7 @@ export default function Main(props) {
   //const dispatch = useDispatch();
   //读取cookie中的id
   const userId = Cookies.get('userId');
+  //console.log(userId)
   //cookie中没有_id则跳转到登录页面
   if (!userId) {
     props.history.push('/login');

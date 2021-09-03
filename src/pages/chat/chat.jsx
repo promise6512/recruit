@@ -1,10 +1,10 @@
 import { NavBar, List, InputItem, Icon, Grid } from "antd-mobile"
 //import header from "../../assets/header-images/头像1.png"
 import { useState,useEffect } from "react";
-import { useSelector } from "react-redux"
+import { useSelector,useDispatch } from "react-redux"
 import { useHistory, useParams } from "react-router-dom";
 import "./chat.css"
-import { sendMsg } from "../../store/features/chatSlice";
+import { sendMsg,reqReadMsg } from "../../store/features/chatSlice";
 
 const emojisList = ['😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀'
   , '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣'
@@ -19,11 +19,18 @@ export default function Chat() {
     })
   })
   
+  useEffect(()=>{
+    return () => {
+      dispatch(reqReadMsg({from:params.userId}))
+    }
+  },[])
+
   const [content, setContent] = useState('');//储存聊天出入框的内容
   const [isShowEmojiList, setIsShowEmojiList] = useState(false); //是否显示标签网格
   const history = useHistory()
   //获取当前路径参数
   const params = useParams()
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user).data;
   const { users, chatMsgs } = useSelector(state => state.chat);
 
