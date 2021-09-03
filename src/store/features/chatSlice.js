@@ -44,9 +44,13 @@ export const chatSlice = createSlice({
   initialState,
   reducers:{
     receiveMsg:(state,{payload}) => {
-      state.chatMsgs = [...state.chatMsgs,payload];
       const userId =  Cookies.get('userId').slice(3,Cookies.get('userId').length-1)
-      state.unReadCount += payload.read || userId===payload.from  ? 0 : 1;
+      if(payload.from === userId){
+        payload = {...payload,read:true}
+      }
+      state.chatMsgs = [...state.chatMsgs,payload];
+     
+      state.unReadCount += !payload.read || userId===payload.from  ? 0 : 1;
     }
   },
   extraReducers:{
