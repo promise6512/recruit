@@ -1,10 +1,10 @@
 import { NavBar, List, InputItem, Icon, Grid } from "antd-mobile"
 //import header from "../../assets/header-images/头像1.png"
-import { useState,useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux"
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux"
 import { useHistory, useParams } from "react-router-dom";
 import "./chat.css"
-import { sendMsg,reqReadMsg } from "../../store/features/chatSlice";
+import { sendMsg, reqReadMsg } from "../../store/features/chatSlice";
 
 const emojisList = ['😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀'
   , '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣'
@@ -12,18 +12,18 @@ const emojisList = ['😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '�
   , '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣', '😀', '😁', '🤣']
 const emojis = emojisList.map(emoji => ({ text: emoji }))
 export default function Chat() {
-  useEffect(()=>{
+  useEffect(() => {
     window.scrollTo({
-      top:document.body.scrollHeight,
-      behavior:'auto'
+      top: document.body.scrollHeight,
+      behavior: 'auto'
     })
   })
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     return () => {
-      dispatch(reqReadMsg({from:params.userId}))
+      dispatch(reqReadMsg({ from: params.userId }))
     }
-  },[])
+  }, [])
 
   const [content, setContent] = useState('');//储存聊天出入框的内容
   const [isShowEmojiList, setIsShowEmojiList] = useState(false); //是否显示标签网格
@@ -39,7 +39,7 @@ export default function Chat() {
   //计算当前聊天的chat_id
   const myId = _id;  //我的id
   const targetId = params.userId; //对方id
-  
+
   const chat_id = [myId, targetId].sort().join('_');
 
   //对chatMsgs进行过滤,获取当前用户与对方的聊天记录
@@ -65,9 +65,9 @@ export default function Chat() {
   const showEmojiList = () => {
     setIsShowEmojiList(isShow => {
       //当显示了表情栏是调整聊天界面底部margin,防止表情栏遮挡聊天界面
-      if(isShow){
+      if (isShow) {
         document.getElementById("list").style.marginBottom = "50px"
-      }else{
+      } else {
         document.getElementById("list").style.marginBottom = "325.5px"
       }
       return !isShow
